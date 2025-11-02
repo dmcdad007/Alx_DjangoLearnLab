@@ -11,9 +11,10 @@ b.save()
 b = Book.objects.get(pk=b.pk)
 b.title
 # Expected output:
-# 'Nineteen Eighty-Four'
+# "Nineteen Eighty-Four"
 
 # Printing the object:
 print(b)
 # Expected printed output:
 # Nineteen Eighty-Four by George Orwell (1949)
+
