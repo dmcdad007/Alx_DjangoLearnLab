@@ -4,12 +4,12 @@ from bookshelf.models import Book
 b = Book.objects.get(title="1984", author="George Orwell", publication_year=1949)
 
 # Update the title
-b.title = "Nineteen Eighty-Four"
+book.title = "Nineteen Eighty-Four"
 b.save()
 
 # Verify update
 b = Book.objects.get(pk=b.pk)
-b.title
+book.title
 # Expected output:
 # "Nineteen Eighty-Four"
 
@@ -17,4 +17,5 @@ b.title
 print(b)
 # Expected printed output:
 # Nineteen Eighty-Four by George Orwell (1949)
+
 
