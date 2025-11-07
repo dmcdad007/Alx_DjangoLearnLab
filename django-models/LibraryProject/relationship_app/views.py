@@ -11,5 +11,6 @@ from django.views.generic import DetailView
 # ---------- Function-based view ----------
 def list_books(request):
     """Display a list of all books and their authors."""
-    books = Book.objects.select_related('author').all()
+    books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
+
