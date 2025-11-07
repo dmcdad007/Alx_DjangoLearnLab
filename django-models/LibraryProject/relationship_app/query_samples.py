@@ -3,6 +3,7 @@ from relationship_app.models import Author, Book, Library, Librarian
 # 1) Query all books by a specific author
 author = Author.objects.filter(name='Jane Doe').first()
 if author:
+    author = Author.objects.get(name=author_name)
     books_by_author = Book.objects.filter(author=author)
     print("Books by", author.name, ":", [b.title for b in books_by_author])
 
@@ -26,4 +27,5 @@ if __name__ == "__main__":
     print("Books by 'J.K. Rowling':", list(get_books_by_author("J.K. Rowling")))
     print("Books in 'Central Library':", list(get_books_in_library("Central Library")))
     print("Librarian for 'Central Library':", get_librarian_for_library("Central Library"))
+
 
