@@ -7,7 +7,7 @@ urlpatterns = [
 ]
 
 from django.urls import path
-from . import views
+from .import views
 
 urlpatterns = [
     # Existing routes
@@ -17,5 +17,8 @@ urlpatterns = [
     # Authentication routes
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('logout/', LogoutView.as_view(template_name="),
+    path('login/', LoginView.as_view(template_name="),
     path('register/', views.register_view, name='register'),
+     "LoginView.as_view(template_name="
 ]
