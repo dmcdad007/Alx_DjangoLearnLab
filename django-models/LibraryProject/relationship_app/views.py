@@ -69,6 +69,40 @@ def logout_view(request):
     return render(request, 'relationship_app/logout.html')
 
 
+from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test, login_required
+
+def _has_role(user, role_name):
+    # If anonymous, user won't have profile attribute; deny access
+    if not user.is_authenticated:
+        return False
+    # In case profile doesn't exist (rare), deny access
+    profile = getattr(user, 'profile', None)
+    if profile is None:
+        return False
+    return profile.role == role_name
+
+def _is_admin(user):
+    return _has_role(user, 'Admin')
+
+def _is_librarian(user):
+    return _has_role(user, 'Librarian')
+
+def _is_member(user):
+    return _has_role(user, 'Member')
+
+@user_passes_test(_is_admin, login_url='login')
+def admin_view(request):
+    return render(request, 'myapp/admin_view.html')
+
+@user_passes_test(_is_librarian, login_url='login')
+def librarian_view(request):
+    return render(request, 'myapp/librarian_view.html')
+
+@user_passes_test(_is_member, login_url='login')
+def member_view(request):
+    return render(request, 'myapp/member_view.html')
+
 
 
 
