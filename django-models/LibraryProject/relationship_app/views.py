@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.contrib.auth import login
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -24,6 +24,7 @@ class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
+
 
 
 
