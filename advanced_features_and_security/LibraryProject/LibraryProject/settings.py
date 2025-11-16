@@ -231,3 +231,93 @@ INSTALLED_APPS = [
 # ------------------------------------------------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# LibraryProject/settings.py
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ----------------------------------------------------------------------
+# SECURITY WARNING: keep the secret key used in production secret!
+# ----------------------------------------------------------------------
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-secret-for-dev-only')
+
+# ----------------------------------------------------------------------
+# PRODUCTION SECURITY SETTINGS
+# ----------------------------------------------------------------------
+# 1. DEBUG must be False in production to avoid leaking sensitive info
+DEBUG = False
+
+# 2. Allowed hosts – replace with your real domain(s)
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com', 'localhost']
+
+# ----------------------------------------------------------------------
+# HTTPS ENFORCEMENT
+# ----------------------------------------------------------------------
+# Redirect all HTTP → HTTPS
+SECURE_SSL_REDIRECT = True
+# Optional: Allow proxy to set X-Forwarded-Proto (e.g., behind Nginx)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# ----------------------------------------------------------------------
+# HTTP Strict Transport Security (HSTS)
+# ----------------------------------------------------------------------
+# Instruct browsers to only use HTTPS for 1 year
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to all subdomains
+SECURE_HSTS_PRELOAD = True              # Eligible for HSTS preload list
+
+# ----------------------------------------------------------------------
+# SECURE COOKIES (only over HTTPS)
+# ----------------------------------------------------------------------
+SESSION_COOKIE_SECURE = True    # Session cookie only sent over HTTPS
+CSRF_COOKIE_SECURE = True       # CSRF cookie only sent over HTTPS
+SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript access to session cookie
+CSRF_COOKIE_HTTPONLY = False    # Must be False for CSRF token to be read by JS
+
+# ----------------------------------------------------------------------
+# SECURITY HEADERS (Browser-level protections)
+# ----------------------------------------------------------------------
+# Prevent clickjacking by blocking framing
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent MIME-type sniffing attacks
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser's built-in XSS protection (legacy, but harmless)
+SECURE_BROWSER_XSS_FILTER = True
+
+# ----------------------------------------------------------------------
+# MIDDLEWARE
+# ----------------------------------------------------------------------
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',  # Must be first
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# ----------------------------------------------------------------------
+# INSTALLED APPS
+# ----------------------------------------------------------------------
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'bookshelf',
+]
+
+# ----------------------------------------------------------------------
+# STATIC & MEDIA (Production)
+# ----------------------------------------------------------------------
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
