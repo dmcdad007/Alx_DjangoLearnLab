@@ -13,20 +13,36 @@ class BookAdmin(admin.ModelAdmin):
     ordering = ("-publication_year", "title")
     list_per_page = 25
 
+# users/admin.py
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import CustomUser
 
 
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    list_display = ('username', 'email', 'date_of_birth', 'is_staff', 'is_superuser')
-    fieldsets = UserAdmin.fieldsets + (
-        ('Additional Info', {'fields': ('date_of_birth', 'profile_photo')}),
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Additional Info', {'fields': ('date_of_birth', 'profile_photo')}),
+@admin.register(CustomUser)
+class CustomUserAdmin(BaseUserAdmin):
+    """Admin interface for CustomUser."""
+
+    # Fields displayed in the list view
+    list_display = ("email", "first_name", "last_name", "date_of_birth", "is_staff")
+    list_filter = ("is_staff", "is_superuser", "is_active", "date_of_birth")
+    search_fields = ("email", "first_name", "last_name")
+
+    # Layout of the change form
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Personal info", {"fields": ("first_name", "last_name", "date_of_birth", "profile_photo")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
 
+    # Fields shown when adding a new user
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": ("email", "password1", "password2", "date_of_birth", "profile_photo"),
+        }),
+    )
 
-admin.site.register(CustomUser, CustomUserAdmin)
+    ordering = ("email",)
+    filter_horizontal = ("groups", "user_permissions",)
