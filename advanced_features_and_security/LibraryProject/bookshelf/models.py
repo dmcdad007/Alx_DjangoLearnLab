@@ -49,3 +49,31 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+# blog/models.py
+from django.db import models
+from django.contrib.auth.models import Group
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # ------------------------------------------------------------------
+        # CUSTOM PERMISSIONS
+        # ------------------------------------------------------------------
+        # The codenames **must** match the variable names used in the task:
+        # can_view, can_create, can_edit, can_delete
+        permissions = (
+            ("can_view", "Can view article"),
+            ("can_create", "Can create article"),
+            ("can_edit", "Can edit article"),
+            ("can_delete", "Can delete article"),
+        )
+
+    def __str__(self):
+        return self.title
