@@ -130,6 +130,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bookshelf.CustomUser',
 
     # your apps
     'users.apps.UsersConfig',   # <-- make sure the app is listed
@@ -143,3 +144,4 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # Media files (for profile_photo)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
