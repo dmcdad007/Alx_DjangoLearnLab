@@ -76,3 +76,5 @@ def article_delete(request, pk):
         messages.success(request, 'Article deleted.')
         return redirect('blog:article_list')
     return render(request, 'blog/article_confirm_delete.html', {'article': article})
+
+book_list", "books
