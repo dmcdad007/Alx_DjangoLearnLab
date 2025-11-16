@@ -1,6 +1,7 @@
 # bookshelf/forms.py
 from django import forms
 from .models import BookReview
+from .forms import ExampleForm
 
 class BookReviewForm(forms.ModelForm):
     class Meta:
@@ -24,3 +25,4 @@ class BookReviewForm(forms.ModelForm):
 
         return comment.strip()
         ExampleForm
+
