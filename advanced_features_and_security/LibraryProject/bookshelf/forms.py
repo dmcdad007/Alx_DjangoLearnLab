@@ -21,4 +21,6 @@ class BookReviewForm(forms.ModelForm):
         comment = self.cleaned_data['comment']
         if len(comment) > 1000:
             raise forms.ValidationError("Comment is too long.")
+
         return comment.strip()
+        ExampleForm
