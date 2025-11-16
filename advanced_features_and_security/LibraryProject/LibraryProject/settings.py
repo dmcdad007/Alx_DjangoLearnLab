@@ -145,3 +145,89 @@ AUTH_USER_MODEL = 'users.CustomUser'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
+# LibraryProject/settings.py
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ------------------------------------------------------------------
+# SECURITY WARNING: keep the secret key secret!
+# ------------------------------------------------------------------
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-secret-key-here')
+
+# ------------------------------------------------------------------
+# SECURITY: Production settings
+# ------------------------------------------------------------------
+DEBUG = False  # Must be False in production
+
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com', 'localhost']
+
+# ------------------------------------------------------------------
+# Browser-level protection headers
+# ------------------------------------------------------------------
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking
+
+# ------------------------------------------------------------------
+# Cookie security (HTTPS only)
+# ------------------------------------------------------------------
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True  # Prevent JS access to session cookie
+
+# ------------------------------------------------------------------
+# HSTS (optional but recommended)
+# ------------------------------------------------------------------
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# ------------------------------------------------------------------
+# CSP – Using django-csp (installed via pip)
+# ------------------------------------------------------------------
+# pip install django-csp
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',  # <-- Add this
+]
+
+# Content Security Policy
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")  # Allow inline styles (common in Django admin)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'", "data:")
+CSP_FONT_SRC = ("'self'",)
+CSP_FRAME_ANCESTORS = ("'none'",)
+CSP_FORM_ACTION = ("'self'",)
+
+# Optional: Report violations (uncomment to enable)
+# CSP_REPORT_URI = '/csp-report/'
+
+# ------------------------------------------------------------------
+# Apps
+# ------------------------------------------------------------------
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'csp',                    # <-- Add django-csp
+    'bookshelf',
+]
+
+# ------------------------------------------------------------------
+# Static & Media (example for production)
+# ------------------------------------------------------------------
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
