@@ -78,3 +78,59 @@ def article_delete(request, pk):
     return render(request, 'blog/article_confirm_delete.html', {'article': article})
 
 book_list", "books
+
+# bookshelf/views.py
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.db.models import Q
+from .models import Book
+from .forms import BookReviewForm  # Assume you have this form
+
+
+def book_list(request):
+    """
+    Secure search: Use Q objects to prevent SQL injection.
+    Always validate and sanitize user input.
+    """
+    query = request.GET.get('q', '').strip()
+    books = Book.objects.all()
+
+    if query:
+        # Safe parameterized query using ORM
+        books = books.filter(
+            Q(title__icontains=query) |
+            Q(author__icontains=query)
+        )
+
+    return render(request, 'bookshelf/book_list.html', {
+        'books': books,
+        'query': query
+    })
+
+
+def add_review(request, book_id):
+    """
+    Secure form handling:
+    - Use Django Form for validation
+    - CSRF enforced by template
+    - No raw SQL
+    """
+    book = Book.objects.get(id=book_id)
+
+    if request.method == 'POST':
+        form = BookReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.book = book
+            review.user = request.user
+            review.save()
+            messages.success(request, 'Review added successfully.')
+            return redirect('bookshelf:book_list')
+    else:
+        form = BookReviewForm()
+
+    return render(request, 'bookshelf/form_example.html', {
+        'form': form,
+        'book': book
+    })
+
