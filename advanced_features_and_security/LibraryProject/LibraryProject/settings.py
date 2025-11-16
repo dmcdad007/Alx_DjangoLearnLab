@@ -120,3 +120,26 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# advanced_features_and_security/settings.py
+...
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # your apps
+    'users.apps.UsersConfig',   # <-- make sure the app is listed
+]
+
+# ------------------------------------------------------------------
+# CUSTOM USER MODEL
+# ------------------------------------------------------------------
+AUTH_USER_MODEL = 'users.CustomUser'
+
+# Media files (for profile_photo)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
