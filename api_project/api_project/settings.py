@@ -135,3 +135,10 @@ INSTALLED_APPS = [
     # Local apps
     'api',
 ]
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'rest_framework.authtoken',  # Enables token authentication
+    'api',
+]
+
