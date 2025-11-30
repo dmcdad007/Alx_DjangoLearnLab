@@ -4,6 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
+from django_filters import rest_framework
 
 class AuthorListView(generics.ListCreateAPIView):
     queryset = Author.objects.all()
@@ -115,3 +116,4 @@ class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
+
