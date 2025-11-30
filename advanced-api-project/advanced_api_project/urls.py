@@ -29,3 +29,11 @@ urlpatterns = [
     path('authors/', views.AuthorListView.as_view()),
     path('books/', views.BookListView.as_view()),
 ]
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
+]
