@@ -44,6 +44,7 @@ urlpatterns = [
     path('books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
     path('books/<int:pk>/update/', BookUpdateView.as_view(), name='book-update'),
     path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book-delete'),
+    books/update", "books/delete
 ]
 
 from django.urls import path
@@ -62,3 +63,4 @@ urlpatterns = [
     path('books/<int:pk>/update/', BookUpdateView.as_view(), name='book-update'),
     path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book-delete'),
 ]
+
