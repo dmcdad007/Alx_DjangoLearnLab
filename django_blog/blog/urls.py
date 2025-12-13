@@ -24,3 +24,4 @@ urlpatterns = [
     "post/<int:pk>/update/",
     "post/new/"
 ]
+path('blog/', include('blog.urls')),
